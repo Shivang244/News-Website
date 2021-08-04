@@ -52,25 +52,25 @@ newsRouter.get("/:id", async (req, res) => {
 });
 
 newsRouter.post("", async (req, res) => {
-  let articleID = req.params.id;
+  let search = req.body.search;
   try {
     const newsAPI = await axios.get(
-      ` https://raddy.co.uk/wp-json/wp/v2/posts?search=`
+      ` https://raddy.co.uk/wp-json/wp/v2/posts?search=${search}`
     );
     /// console.log(newsAPI.data);
-    res.render("newsOne", { articles: newsAPI.data });
+    res.render("newsSearch", { articles: newsAPI.data });
   } catch (error) {
     if (error.response) {
-      res.render("newsOne", { articles: null });
+      res.render("newsSearch", { articles: null });
       console.log(error.response.data);
       console.log(error.response.status);
       console.log(error.response.headers);
     } else if (error.request) {
-      res.render("newsOne", { articles: null });
+      res.render("newsSearch", { articles: null });
 
       console.log(error.request);
     } else {
-      res.render("newsOne", { articles: null });
+      res.render("newsSearch", { articles: null });
 
       console.log("Error", err.message);
     }
